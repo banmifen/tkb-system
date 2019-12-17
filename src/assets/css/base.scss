@@ -1,5 +1,5 @@
 @import './reset.scss';
-// @import './variable.scss';
+@import './variable.scss';
 // @import './mixin.scss';
 
 html, body{
@@ -10,7 +10,7 @@ html, body{
 body{
 	// @include font_size($font_medium);
 	// @include font_size(50px);
-	// font-size: 50px;
+	font-size: 11px;
 	font-family: Helvetica,sans-serif, STHeiTi;
 }
 img{
