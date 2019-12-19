@@ -35,8 +35,8 @@ export default {
   name: 'upList',
   methods: {
     deleteRow (index, rows) {
-      console.log(index, rows)
-      this.$router.push('/Up/报名入口/竞赛列表/SignUpList/SignUpSubmit')
+      // console.log(index, rows)
+      this.$router.push('/SignUp/报名入口/竞赛列表/SignUpList/SignUpSubmit')
     }
   },
   data () {

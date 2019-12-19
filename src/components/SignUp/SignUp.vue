@@ -6,7 +6,9 @@
       <el-table-column prop="time" label="比赛时间" min-width="10%" align="center"></el-table-column>
       <el-table-column prop="operating" label="操作" min-width="10%" align="center">
         <template slot-scope="scope">
-          <el-button v-show="tableData[scope.$index].baoming" @click.native.prevent="deleteRow(scope.$index, tableData)" type="text" size="small">报名</el-button>
+          <el-button v-show="tableData[scope.$index].baoming" @click.native.prevent="deleteRow(scope.$index, tableData)" type="text" size="small">
+            <el-button type="primary" size="mini" round><i class="el-icon-edit"></i><span>报名</span></el-button>
+          </el-button>
           <el-button v-show="tableData[scope.$index].jiezhi" @click.native.prevent="deleteRow(scope.$index, tableData)" type="text" disabled size="small">已截止</el-button>
         </template>
       </el-table-column>
@@ -21,7 +23,7 @@ export default {
     deleteRow (index, rows) {
       // console.log(index)
       // console.log(rows)
-      this.$router.push('/Up/报名入口/竞赛列表/SignUpList')
+      this.$router.push('/SignUp/报名入口/竞赛列表/SignUpList')
     }
   },
   mounted: function () {

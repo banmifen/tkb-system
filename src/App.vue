@@ -88,7 +88,7 @@ export default {
   // 一进来就执行
   created: function () {
     // 刷新后返回主页
-    this.$router.push('/Up/报名入口/竞赛列表')
+    this.$router.push('/SignUp/报名入口/竞赛列表')
     this.title.title1 = this.$route.params.title1
     this.title.title2 = this.$route.params.title2
     // console.log(this.$route)
@@ -216,12 +216,12 @@ export default {
         height: 100%;
         background: $color_gray;
         border: 1px solid $color_gray;
-        z-index: 888;
+        z-index: 200;
       }
       .frame-right {
         width: 80%;
         height: 100%;
-        z-index: 777;
+        // z-index: 100;
         overflow: hidden;
         ul{
           width: 100%;

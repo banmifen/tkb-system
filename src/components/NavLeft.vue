@@ -9,7 +9,7 @@
               class="el-menu-vertical-demo"
               @open="handleOpen"
               @close="handleClose">
-              <router-link to="/Up/报名入口/竞赛列表">
+              <router-link to="/SignUp/报名入口/竞赛列表">
                 <el-menu-item index="1">
                   <i class="el-icon-edit"></i>
                   <span slot="title">报名入口</span>
@@ -27,7 +27,7 @@
                   <span slot="title">参赛官员</span>
                 </el-menu-item>
               </router-link>
-              <router-link to="/Leader/随便/随便">
+              <router-link to="/SetUp/随便/随便">
                 <el-menu-item index="4">
                   <i class="el-icon-setting"></i>
                   <span slot="title">不知道写什么,那就写设置吧</span>
