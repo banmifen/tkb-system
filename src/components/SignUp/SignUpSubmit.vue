@@ -181,7 +181,15 @@ export default {
       let name = this.tableData[i].name
       console.log('姓名:', name)
       // 拿到性别
-      console.log('性别:', this.$route.params.class2.substr(2, 1))
+      let ages = this.$route.params.class2.split('')
+      let age = '女'
+      for (let i = 0; i < ages.length; i++) {
+        if (ages[i] === '男') {
+          age = '男'
+          continue
+        }
+      }
+      console.log('性别:', age)
       // 拿到身份证
       let idCard = this.tableData[i].idCard
       console.log('身份证:', idCard)

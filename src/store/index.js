@@ -127,41 +127,35 @@ export default new Vuex.Store({
     ],
     InquireTableData: [
       {
-        selection: '',
         gameName: '2019年福建省全民健身运动会跆拳道联赛暨福建省第五届大众跆拳道俱乐部联赛总决赛',
         class1: '个人品势',
         class2: '男子青年高级组',
         name: '金春阳',
         age: '男',
         idCard: '352202199411010550',
-        cost1: 150,
-        cost2: 20,
+        cost: 170,
         status: '报名成功',
         date: '2019-12-06 00:40:50'
       },
       {
-        selection: '',
         gameName: '2019年福建省全民健身运动会跆拳道联赛暨福建省第五届大众跆拳道俱乐部联赛总决赛',
         class1: '个人品势',
         class2: '男子青年高级组',
         name: '陈小白',
         age: '男',
         idCard: '352202199912210550',
-        cost1: 150,
-        cost2: 20,
+        cost: 170,
         status: '未交费',
         date: '2019-12-06 00:40:50'
       },
       {
-        selection: '',
         gameName: '2019年福建省全民健身运动会跆拳道联赛暨福建省第五届大众跆拳道俱乐部联赛总决赛',
         class1: '个人品势',
         class2: '女子青年高级组',
         name: '陈小红',
         age: '女',
         idCard: '352202200012210550',
-        cost1: 150,
-        cost2: 20,
+        cost: 170,
         status: '未交费',
         date: '2019-12-06 00:40:50'
       }
