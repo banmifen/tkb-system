@@ -13,8 +13,8 @@ Vue.use(VueRouter)
 // 定义路由对应的模板
 const routes = [
   { path: '/SignUp/:title1/:title2', component: SignUp },
-  { path: '/SignUp/报名入口/竞赛列表/SignUpList', component: SignUpList },
-  { path: '/SignUp/报名入口/竞赛列表/SignUpList/SignUpSubmit', component: SignUpSubmit },
+  { path: '/SignUp/报名入口/竞赛列表/:gameName', component: SignUpList },
+  { path: '/SignUp/报名入口/竞赛列表/:gameName/:class1/:class2', component: SignUpSubmit },
   { path: '/UpInquire/:title1/:title2', component: UpInquire },
   { path: '/Leader/:title1/:title2', component: Leader },
   { path: '/SetUp/:title1/:title2', component: SetUp }

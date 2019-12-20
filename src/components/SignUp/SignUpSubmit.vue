@@ -4,7 +4,7 @@
       <div class="Pay-info">
         <img src="../../images/微信.jpg" alt="微信">
         <img src="../../images/支付宝.jpg" alt="支付宝">
-         <el-button type="success" round @click="submitFn">已支付但没反应</el-button>
+         <el-button type="success" round @click="PayShow">已支付但没反应</el-button>
       </div>
     </div>
     <ul class="signUpSubmitLeft">
@@ -81,9 +81,7 @@
 export default {
   name: 'signUpSubmit',
   methods: {
-    areaFn (index, row) {
-      // console.log(index, row)
-    },
+    areaFn (index, row) {},
     currentSel (value) {
       // console.log(value)
     },
@@ -134,6 +132,7 @@ export default {
           if (this.tableData[i].idCard.length === 18) {
             // 判断是否输入姓名
             if (this.tableData[i].name !== '') {
+              this.information(i)
               // 判断是否循环结束
               if (i === this.tableData.length - 1) {
                 // 拿到总金额
@@ -142,7 +141,7 @@ export default {
                   sum += this.tableData[i].cost
                 }
                 this.costSum = sum
-                console.log(this.costSum)
+                console.log('金额:', this.costSum)
                 this.Pay = !this.Pay
               }
             } else {
@@ -167,6 +166,32 @@ export default {
           break
         }
       }
+    },
+    information (i) {
+      // 拿到赛事名称
+      let gameName = this.$route.params.gameName
+      console.log('赛事名称:', gameName)
+      // 拿到竞赛分类
+      let class1 = this.$route.params.class1
+      console.log('竞赛分类:', class1)
+      // 拿到组别名称
+      let class2 = this.$route.params.class2
+      console.log('组别名称:', class2)
+      // 拿到姓名
+      let name = this.tableData[i].name
+      console.log('姓名:', name)
+      // 拿到性别
+      console.log('性别:', this.$route.params.class2.substr(2, 1))
+      // 拿到身份证
+      let idCard = this.tableData[i].idCard
+      console.log('身份证:', idCard)
+      // 拿到报名时间
+      let date = new Date()
+      let signUpDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}- ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+      console.log(signUpDate)
+    },
+    PayShow () {
+      this.Pay = !this.Pay
     },
     // 总价方法
     getSummaries (param) {
