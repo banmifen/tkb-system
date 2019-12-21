@@ -146,7 +146,7 @@ export default new Vuex.Store({
         idCard: '352202199912210550',
         cost: 170,
         status: '未交费',
-        date: '2019-12-06 00:40:50'
+        date: ''
       },
       {
         gameName: '2019年福建省全民健身运动会跆拳道联赛暨福建省第五届大众跆拳道俱乐部联赛总决赛',
@@ -157,9 +157,10 @@ export default new Vuex.Store({
         idCard: '352202200012210550',
         cost: 170,
         status: '未交费',
-        date: '2019-12-06 00:40:50'
+        date: ''
       }
-    ]
+    ],
+    SubmitData: []
   },
   mutations: {
   },

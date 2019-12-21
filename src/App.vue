@@ -45,7 +45,7 @@
               <span>{{title.title2}}</span>
             </li>
             <li class="frame-right-bottom">
-              <router-view></router-view>
+              <router-view @titleFn="titleFn"></router-view>
             </li>
           </ul>
         </div>

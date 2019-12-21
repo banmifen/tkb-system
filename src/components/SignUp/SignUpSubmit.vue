@@ -1,12 +1,5 @@
 <template>
   <div id="signUpSubmit">
-    <div class="Pay" v-show="Pay" >
-      <div class="Pay-info">
-        <img src="../../images/微信.jpg" alt="微信">
-        <img src="../../images/支付宝.jpg" alt="支付宝">
-         <el-button type="success" round @click="PayShow">已支付但没反应</el-button>
-      </div>
-    </div>
     <ul class="signUpSubmitLeft">
       <li>竞赛信息</li>
       <li>
@@ -125,6 +118,26 @@ export default {
       // console.log(this.tableData)
     },
     submitFn () {
+      // 以身份证验证,防止有人重复报名
+      for (let i = 0; i < this.tableData.length; i++) {
+        if (this.tableData[i].idCard === this.$store.state.InquireTableData[i].idCard) {
+          this.$message({
+            message: '有选手已报名,请确认',
+            type: 'warning'
+          })
+          return
+        }
+        for (let k = 0; k < this.$store.state.InquireTableData.length; k++) {
+          if (this.tableData[i].idCard === this.$store.state.InquireTableData[k].idCard) {
+            this.$message({
+              message: '有选手已报名,请确认',
+              type: 'warning'
+            })
+            return
+          }
+        }
+      }
+      // 信息完整度判断
       for (let i = 0; i < this.tableData.length; i++) {
         // 判断是否输入身份证
         if (this.tableData[i].idCard !== '') {
@@ -133,16 +146,11 @@ export default {
             // 判断是否输入姓名
             if (this.tableData[i].name !== '') {
               this.information(i)
-              // 判断是否循环结束
+              // 判断是否检查结束
               if (i === this.tableData.length - 1) {
-                // 拿到总金额
-                let sum = 0
-                for (let i = 0; i < this.tableData.length; i++) {
-                  sum += this.tableData[i].cost
-                }
-                this.costSum = sum
-                console.log('金额:', this.costSum)
-                this.Pay = !this.Pay
+                this.$router.push({
+                  path: '/Pay/缴费/缴费信息/'
+                })
               }
             } else {
               this.$message({
@@ -170,16 +178,16 @@ export default {
     information (i) {
       // 拿到赛事名称
       let gameName = this.$route.params.gameName
-      console.log('赛事名称:', gameName)
+      // console.log('赛事名称:', gameName)
       // 拿到竞赛分类
       let class1 = this.$route.params.class1
-      console.log('竞赛分类:', class1)
+      // console.log('竞赛分类:', class1)
       // 拿到组别名称
       let class2 = this.$route.params.class2
-      console.log('组别名称:', class2)
+      // console.log('组别名称:', class2)
       // 拿到姓名
       let name = this.tableData[i].name
-      console.log('姓名:', name)
+      // console.log('姓名:', name)
       // 拿到性别
       let ages = this.$route.params.class2.split('')
       let age = '女'
@@ -189,17 +197,52 @@ export default {
           continue
         }
       }
-      console.log('性别:', age)
+      // console.log('性别:', age)
       // 拿到身份证
       let idCard = this.tableData[i].idCard
-      console.log('身份证:', idCard)
+      // console.log('身份证:', idCard)
+      // 拿到报名费
+      let cost = this.tableData[i].cost
+      // console.log(cost)
       // 拿到报名时间
       let date = new Date()
-      let signUpDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}- ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-      console.log(signUpDate)
-    },
-    PayShow () {
-      this.Pay = !this.Pay
+      let Year = date.getFullYear()// 获取年
+      let Month = date.getMonth() - 10// 获取月
+      Month = Month < 10 ? '0' + Month : '' + Month
+      let Dates = date.getDate()// 获取日
+      Dates = Dates < 10 ? '0' + Dates : '' + Dates
+      let Hours = date.getHours()// 获取小时
+      Hours = Hours < 10 ? '0' + Hours : '' + Hours
+      let Minutes = date.getMinutes()// 获取分钟
+      Minutes = Minutes < 10 ? '0' + Minutes : '' + Minutes
+      let Seconds = date.getSeconds()// 获取秒
+      Seconds = Seconds < 10 ? '0' + Seconds : '' + Seconds
+      let signUpDate = Year + '-' + Month + '-' + Dates + ' ' + Hours + ':' + Minutes + ':' + Seconds
+      // console.log(signUpDate)
+      // 传递给缴费信息(完毕就删除)
+      this.$store.state.SubmitData.push({
+        'gameName': gameName,
+        'class1': class1,
+        'class2': class2,
+        'name': name,
+        'age': age,
+        'idCard': idCard,
+        'cost': cost,
+        'signUpDate': signUpDate
+      })
+      // 传递给报名查询
+      this.$store.state.InquireTableData.push({
+        'gameName': gameName,
+        'class1': class1,
+        'class2': class2,
+        'name': name,
+        'age': age,
+        'idCard': idCard,
+        'cost': cost,
+        'status': '未交费',
+        'signUpDate': signUpDate
+      })
+      // console.log(this.$store.state.SubmitData)
     },
     // 总价方法
     getSummaries (param) {
@@ -261,7 +304,7 @@ export default {
         }
       ],
       costSum: '',
-      Pay: false
+      SubmitData: []
     }
   }
 }
@@ -274,30 +317,6 @@ export default {
   height: 100%;
   display: flex;
   justify-content: space-between;
-  .Pay{
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 999;
-    .Pay-info{
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      img{
-        width: 30%;
-        height: 30%;
-        margin: 10%;
-      }
-      button{
-        display: block;
-        margin: 0 auto;
-      }
-    }
-  }
   .signUpSubmitLeft {
     width: 20%;
     height: 25%;
