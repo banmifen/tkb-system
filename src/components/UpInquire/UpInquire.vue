@@ -29,6 +29,7 @@
         <div class="upinquire-right">
           <!-- <el-button @click="View()">查看</el-button> -->
           <el-button @click="setSelection()">修改信息</el-button>
+          <el-button @click="removeSelection()">删除信息</el-button>
           <el-button @click="Pay()">缴费</el-button>
         </div>
       </div>
@@ -74,7 +75,7 @@ export default {
       if (this.$store.state.SubmitData.length !== 1) {
         this.$store.state.SubmitData = []
         this.$message({
-          message: '请只选择一位选手',
+          message: '请选择一位选手',
           type: 'warning'
         })
         return
@@ -83,6 +84,16 @@ export default {
         path: '/SetInformation/修改信息/详细信息'
       })
       // console.log(this.$store.state.SubmitData)
+    },
+    removeSelection () {
+      this.multipleSelection.forEach(multipleSelection => {
+        let id = multipleSelection.idCard
+        this.InquireTableData[0].forEach((InquireTableData, index) => {
+          if (id === InquireTableData.idCard) {
+            this.InquireTableData[0].splice(index, 1)
+          }
+        })
+      })
     },
     getSelection (inquire) {
       // 清空缴费列表,避免重复缴费
@@ -192,6 +203,10 @@ export default {
     // 接受父组件传递的方法,一进来就修改title的信息
     this.$emit('titleFn')
     this.SubmitData = this.$store.state.SubmitData
+  },
+  beforeDestroy: function () {
+    // 把缓存信息删除,防止下次重复
+    // this.$store.state.InquireTableData = this.InquireTableData
   }
 }
 </script>

@@ -120,13 +120,6 @@ export default {
     submitFn () {
       // 以身份证验证,防止有人重复报名
       for (let i = 0; i < this.tableData.length; i++) {
-        if (this.tableData[i].idCard === this.$store.state.InquireTableData[i].idCard) {
-          this.$message({
-            message: '有选手已报名,请确认',
-            type: 'warning'
-          })
-          return
-        }
         for (let k = 0; k < this.$store.state.InquireTableData.length; k++) {
           if (this.tableData[i].idCard === this.$store.state.InquireTableData[k].idCard) {
             this.$message({
@@ -136,6 +129,26 @@ export default {
             return
           }
         }
+      }
+      // 判断现在输入的信息是否有重复
+      let count = 0
+      for (let i = 0; i < this.tableData.length; i++) {
+        for (let k = 0; k < this.tableData.length; k++) {
+          if (this.tableData[i].idCard === this.tableData[k].idCard) {
+            count++
+            // console.log(count)
+            // console.log('原数据', this.tableData[i].idCard)
+            // console.log('对比数据', this.tableData[k].idCard)
+            if (count > 1) {
+              this.$message({
+                message: '有重复信息,请确认',
+                type: 'warning'
+              })
+              return
+            }
+          }
+        }
+        count = 0
       }
       // 信息完整度判断
       for (let i = 0; i < this.tableData.length; i++) {

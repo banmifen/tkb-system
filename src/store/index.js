@@ -7,15 +7,15 @@ export default new Vuex.Store({
   state: {
     signUpData: [
       {
-        gameId: '20191226',
+        gameId: '20221226',
         gameName: '2019年福建省全民健身运动会跆拳道联赛暨福建省第五届大众跆拳道俱乐部联赛总决赛',
-        date: '2019-11-01~2019-12-25',
-        time: '2019-12-26',
+        date: '2019-11-01~2022-12-25',
+        time: '2022-12-26',
         operating: '报名截止',
         signUpListData: [
           {
             id: '19ZJS0010101',
-            class1: '个人品势(WT组)',
+            class1: '个人品势',
             class2: '青年男子组',
             age: '男',
             number: '121',
@@ -23,7 +23,7 @@ export default new Vuex.Store({
           },
           {
             id: '19ZJS0010102',
-            class1: '个人品势(WT组)',
+            class1: '个人品势',
             class2: '青年女子组',
             age: '女',
             number: '108',
@@ -31,7 +31,7 @@ export default new Vuex.Store({
           },
           {
             id: '19ZJS0010103',
-            class1: '个人品势(WT组)',
+            class1: '个人品势',
             class2: '少年男子组',
             age: '男',
             number: '228',
@@ -39,7 +39,7 @@ export default new Vuex.Store({
           },
           {
             id: '19ZJS0010104',
-            class1: '个人品势(WT组)',
+            class1: '个人品势',
             class2: '少年女子组',
             age: '女',
             number: '98',
@@ -160,6 +160,7 @@ export default new Vuex.Store({
         date: ''
       }
     ],
+    // 临时缓存资料
     SubmitData: []
   },
   mutations: {
