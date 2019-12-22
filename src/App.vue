@@ -1,9 +1,57 @@
 <template>
   <div id="app">
-    <div class="login" v-show="isShow" @click.self="login">
+    <template>
+      <div class="Tips">
+        <p>默认账号: 123456</p>
+        <p>默认密码: 654321</p>
+        <p>也可直接注册</p>
+      </div>
+      <div class="login" v-show="isShow">
+        <div style="display: flex; margin-top: 20px; height: 100px;">
+          <transition name="el-zoom-in-top">
+            <div v-show="loginShow" class="info transition-box">
+              <ul>
+                <li>登录</li>
+                <li><el-input placeholder="请输入账号" v-model="login.user" clearable></el-input></li>
+                <li><el-input placeholder="请输入密码" v-model="login.psw" show-password></el-input></li>
+                <li>
+                  <el-input v-model="login.vcode" placeholder="验证码"></el-input>
+                  <a href="#"><img src="./images/验证码.png" /></a>
+                </li>
+                <li>
+                  <!-- <el-button type="primary" round @click="isShow = !isShow">登录</el-button> -->
+                  <el-button type="primary" round @click="loginFn">登录</el-button>
+                  <el-button type="primary" round @click="changeRegisterFn">注册</el-button>
+                </li>
+              </ul>
+              <template>
+                <el-link type="info" class="get-psw" lass="get-psw" @click="open">查看默认密码</el-link>
+              </template>
+              <!-- <el-link type="info" class="get-psw">查看默认密码</el-link> -->
+            </div>
+          </transition>
+          <transition name="el-zoom-in-top">
+            <div v-show="registerShow" class="info transition-box">
+              <ul>
+                <li>注册</li>
+                <li><el-input placeholder="请输入账号" v-model="register.user" clearable></el-input></li>
+                <li><el-input placeholder="请输入密码" v-model="register.psw" show-password></el-input></li>
+                <li><el-input placeholder="请确认密码" v-model="register.psw2" show-password></el-input></li>
+                <li>
+                  <el-button type="primary" round @click="changeRegisterFn">返回登录</el-button>
+                  <el-button type="primary" round @click="registerFn" >注册</el-button>
+                </li>
+              </ul>
+              <!-- <el-link type="info" class="get-psw">找回密码</el-link> -->
+            </div>
+          </transition>
+        </div>
+      </div>
+    </template>
+   <!-- <div class="login" v-show="isShow" @click.self="login">
       <div style="display: flex; margin-top: 20px; height: 100px;">
-        <transition name="el-fade-in-linear">
-          <div v-show="isShow" class="info transition-box">
+        <transition name="el-fade-in">
+          <div v-show="login" class="info transition-box">
             <ul>
               <li>登录</li>
               <li><el-input placeholder="请输入账号" v-model="user" clearable></el-input></li>
@@ -13,15 +61,15 @@
                 <a href="#"><img src="./images/验证码.png" /></a>
               </li>
               <li>
-                <el-button type="primary" round>登录</el-button>
-                <el-button type="primary" round>注册</el-button>
+                <el-button type="primary" round @click="loginFn">登录</el-button>
+                <el-button type="primary" round @click="registerFn">注册</el-button>
               </li>
             </ul>
             <el-link type="info" class="get-psw">找回密码</el-link>
           </div>
         </transition>
       </div>
-    </div>
+    </div> -->
     <div class="frame">
       <div class="frame-top">
         <ul>
@@ -30,7 +78,7 @@
             <span>报名管理系统</span>
           </li>
           <li>
-            <a href="#" @click="login">登录</a>
+            <a href="#" v-show="outShow" @click="outFn">退出</a>
             <!-- <a href="#">退出</a> -->
           </li>
         </ul>
@@ -63,9 +111,19 @@ export default {
   data: function () {
     return {
       isShow: false,
-      user: '',
-      psw: '',
-      vcode: '',
+      loginShow: true,
+      registerShow: false,
+      login: {
+        user: '',
+        psw: '',
+        vcode: ''
+      },
+      register: {
+        user: '',
+        psw: '',
+        psw2: ''
+      },
+      outShow: false,
       title: {
         title1: '',
         title2: ''
@@ -73,8 +131,121 @@ export default {
     }
   },
   methods: {
-    login () {
+    loginFn () {
+      // 判断是否输入账号
+      if (this.login.user !== '') {
+        // this.loginFn()
+        // 判断是否有输入密码
+        if (this.login.psw !== '') {
+          // 判断是否有输入验证码
+          if (this.login.vcode) {
+            // 判断验证码是否正确
+            if (this.login.vcode === 'abcd') {
+              // 判断是否有该账号
+              if (this.$store.state.account[this.login.user]) {
+                // 判断密码是否正确
+                if (this.$store.state.account[this.login.user] === this.login.psw) {
+                  this.isShow = !this.isShow
+                  this.outShow = !this.outShow
+                } else {
+                  this.$message({
+                    message: '密码输入错误',
+                    type: 'warning'
+                  })
+                  this.login.psw = ''
+                }
+              } else {
+                this.$message({
+                  message: '没有该账号',
+                  type: 'warning'
+                })
+                this.login.user = ''
+              }
+            } else {
+              this.$message({
+                message: '验证码错误',
+                type: 'warning'
+              })
+              this.login.vcode = ''
+            }
+          } else {
+            this.$message({
+              message: '请输入验证码',
+              type: 'warning'
+            })
+          }
+        } else {
+          this.$message({
+            message: '请输入密码',
+            type: 'warning'
+          })
+        }
+      } else {
+        this.$message({
+          message: '请输入账号',
+          type: 'warning'
+        })
+      }
+    },
+    changeRegisterFn () {
+      this.loginShow = !this.loginShow
+      this.registerShow = !this.registerShow
+    },
+    registerFn () {
+      // 判断是否有输入账号
+      if (this.register.user !== '') {
+        // 判断是否输入密码
+        if (this.register.psw !== '') {
+          // 判断是否输入确认密码
+          if (this.register.psw2 !== '') {
+            // 判断是否有该账号
+            if (!this.$store.state.account[this.register.user]) {
+              // 判断两次密码是否一致
+              if (this.register.psw === this.register.psw2) {
+                this.$store.state.account[this.register.user] = this.register.psw
+                this.login.user = this.register.user
+                this.changeRegisterFn()
+              } else {
+                this.$message({
+                  message: '密码不一致',
+                  type: 'warning'
+                })
+              }
+            } else {
+              this.$message({
+                message: '已有该账号',
+                type: 'warning'
+              })
+            }
+          } else {
+            this.$message({
+              message: '请确认密码',
+              type: 'warning'
+            })
+          }
+        } else {
+          this.$message({
+            message: '请输入密码',
+            type: 'warning'
+          })
+        }
+      } else {
+        this.$message({
+          message: '请输入账号',
+          type: 'warning'
+        })
+      }
+    },
+    outFn () {
       this.isShow = !this.isShow
+      this.outShow = !this.outShow
+      this.login = ''
+      this.register = ''
+    },
+    open () {
+      this.$alert('默认账号: 123456 默认密码: 654321', '密码提示', {
+        confirmButtonText: '确定'
+      })
     },
     titleFn () {
       // 拿到路径名称并分割

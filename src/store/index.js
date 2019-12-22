@@ -5,6 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    account: {
+      123456: '654321'
+    },
     signUpData: [
       {
         gameId: '20221226',
