@@ -36,7 +36,7 @@ export default {
       // console.log(value, index)
     },
     okFn () {
-      console.log(this.SubmitData[0].name, this.SubmitData[0].idCard)
+      // console.log(this.SubmitData[0].name, this.SubmitData[0].idCard)
       this.$store.state.InquireTableData.forEach(InquireTableData => {
         if (InquireTableData.idCard === this.$store.state.SubmitData[0].idCard) {
           InquireTableData.idCard = this.SubmitData[0].idCard

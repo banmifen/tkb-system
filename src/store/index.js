@@ -163,10 +163,40 @@ export default new Vuex.Store({
         date: ''
       }
     ],
-    // 临时缓存资料
-    SubmitData: []
+    leaderData: [
+      {
+        post: '队医',
+        name: '华佗',
+        phone: '12345678901',
+        operating: false
+      },
+      {
+        post: '领队',
+        name: '曹操',
+        phone: '09876543210',
+        operating: false
+      },
+      {
+        post: '教练员',
+        name: '关羽',
+        phone: '12345054321',
+        operating: false
+      },
+      {
+        post: '教练员',
+        name: '张飞',
+        phone: '54321012345',
+        operating: true
+      }
+    ],
+    // 临时提交资料
+    SubmitData: [],
+    count: 0
   },
   mutations: {
+    mAdd (state) {
+      state.count = state.count + 1
+    }
   },
   actions: {
   },

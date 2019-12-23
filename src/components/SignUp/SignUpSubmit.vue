@@ -118,6 +118,8 @@ export default {
       // console.log(this.tableData)
     },
     submitFn () {
+      // 先清空缴费信息
+      this.$store.state.SubmitData = []
       // 以身份证验证,防止有人重复报名
       for (let i = 0; i < this.tableData.length; i++) {
         for (let k = 0; k < this.$store.state.InquireTableData.length; k++) {
@@ -161,6 +163,10 @@ export default {
               this.information(i)
               // 判断是否检查结束
               if (i === this.tableData.length - 1) {
+                // 把资料保存到资料库
+                this.$store.state.SubmitData.forEach(SubmitData => {
+                  this.$store.state.InquireTableData.push(SubmitData)
+                })
                 this.$router.push({
                   path: '/Pay/缴费/缴费信息/'
                 })
@@ -241,17 +247,6 @@ export default {
         'age': age,
         'idCard': idCard,
         'cost': cost,
-        'signUpDate': signUpDate
-      })
-      // 传递给报名查询
-      this.$store.state.InquireTableData.push({
-        'gameName': gameName,
-        'class1': class1,
-        'class2': class2,
-        'name': name,
-        'age': age,
-        'idCard': idCard,
-        'cost': cost,
         'status': '未交费',
         'signUpDate': signUpDate
       })
@@ -284,6 +279,21 @@ export default {
       })
       return sums
     }
+  },
+  beforeDestroy: function () {
+    // console.log(this.$store.state.InquireTableData)
+    // // 传递给报名查询
+    // this.$store.state.InquireTableData.push({
+    //   'gameName': gameName,
+    //   'class1': class1,
+    //   'class2': class2,
+    //   'name': name,
+    //   'age': age,
+    //   'idCard': idCard,
+    //   'cost': cost,
+    //   'status': '未交费',
+    //   'signUpDate': signUpDate
+    // })
   },
   data () {
     return {

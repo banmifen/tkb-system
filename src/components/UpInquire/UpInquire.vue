@@ -198,11 +198,11 @@ export default {
   },
   mounted: function () {
     this.InquireTableData.push(this.$store.state.InquireTableData)
-  },
-  created: function () {
     // 接受父组件传递的方法,一进来就修改title的信息
     this.$emit('titleFn')
     this.SubmitData = this.$store.state.SubmitData
+  },
+  created: function () {
   },
   beforeDestroy: function () {
     // 把缓存信息删除,防止下次重复
