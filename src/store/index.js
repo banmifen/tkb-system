@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     account: {
-      123456: '654321'
+      123: '123'
     },
     signUpData: [
       {
@@ -191,6 +191,7 @@ export default new Vuex.Store({
     ],
     // 临时提交资料
     SubmitData: [],
+    myAccount: '',
     count: 0
   },
   mutations: {

@@ -110,7 +110,7 @@ export default {
   },
   data: function () {
     return {
-      isShow: false,
+      isShow: true,
       loginShow: true,
       registerShow: false,
       login: {
@@ -145,6 +145,11 @@ export default {
               if (this.$store.state.account[this.login.user]) {
                 // 判断密码是否正确
                 if (this.$store.state.account[this.login.user] === this.login.psw) {
+                  this.$store.state.myAccount = this.login.user
+                  this.login.user = ''
+                  this.login.psw = ''
+                  this.login.vcode = ''
+                  this.$router.push('/SignUp/报名入口/竞赛列表')
                   this.isShow = !this.isShow
                   this.outShow = !this.outShow
                 } else {
@@ -204,6 +209,13 @@ export default {
               if (this.register.psw === this.register.psw2) {
                 this.$store.state.account[this.register.user] = this.register.psw
                 this.login.user = this.register.user
+                this.register.user = ''
+                this.register.psw = ''
+                this.register.psw2 = ''
+                this.$message({
+                  type: 'success',
+                  message: '注册成功,请输入密码登录!'
+                })
                 this.changeRegisterFn()
               } else {
                 this.$message({
@@ -239,11 +251,9 @@ export default {
     outFn () {
       this.isShow = !this.isShow
       this.outShow = !this.outShow
-      this.login = ''
-      this.register = ''
     },
     open () {
-      this.$alert('默认账号: 123456 默认密码: 654321', '密码提示', {
+      this.$alert('默认账号: 123 默认密码: 123', '密码提示', {
         confirmButtonText: '确定'
       })
     },
@@ -285,7 +295,7 @@ export default {
     z-index: 999;
     width: 100%;
     height: 100%;
-    position: relative;
+    position: absolute;
     background: rgba(0, 0, 0, 0.2);
     .info {
       position: absolute;
@@ -414,7 +424,7 @@ export default {
             margin: 10px;
             padding: 10px;
             border: 1px solid $color_gray;
-            // position: relative;
+            position: relative;
           }
         }
       }
