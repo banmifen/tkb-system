@@ -86,12 +86,34 @@ export default {
       // console.log(this.$store.state.SubmitData)
     },
     removeSelection () {
-      this.multipleSelection.forEach(multipleSelection => {
-        let id = multipleSelection.idCard
-        this.InquireTableData[0].forEach((InquireTableData, index) => {
-          if (id === InquireTableData.idCard) {
-            this.InquireTableData[0].splice(index, 1)
-          }
+      if (this.multipleSelection.length === 0) {
+        this.$message({
+          type: 'warning',
+          message: '请至少选择一组数据!'
+        })
+        return
+      }
+      this.$confirm('删除该教练员后需要重新添加, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.multipleSelection.forEach(multipleSelection => {
+          let id = multipleSelection.idCard
+          this.InquireTableData[0].forEach((InquireTableData, index) => {
+            if (id === InquireTableData.idCard) {
+              this.InquireTableData[0].splice(index, 1)
+            }
+          })
+        })
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
         })
       })
     },
