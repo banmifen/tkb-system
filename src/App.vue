@@ -158,6 +158,7 @@ export default {
                     type: 'warning'
                   })
                   this.login.psw = ''
+                  this.login.vcode = ''
                 }
               } else {
                 this.$message({
@@ -165,6 +166,8 @@ export default {
                   type: 'warning'
                 })
                 this.login.user = ''
+                this.login.psw = ''
+                this.login.vcode = ''
               }
             } else {
               this.$message({
